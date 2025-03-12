@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { GuestLayout } from "../layouts/guest"
 
 export const TodosPage = () => {
-  const [search, setSearch] = useState("Test Value");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     // mounting & updated
@@ -13,6 +13,17 @@ export const TodosPage = () => {
       console.log('unmounted')
     }
   }, [search])
+
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const url = 'https://jsonplaceholder.typicode.com/todos';
+    fetch(url)
+      .then(response => response.json())
+      .then(json => {
+        setTodos(json);
+      })
+  }, [])
 
   return (
     <GuestLayout>
@@ -29,6 +40,12 @@ export const TodosPage = () => {
         placeholder="Search . . ."
         onKeyUp={(e) => setSearch(e.target.value)}
       />
+
+      {todos?.map((todo) => (
+        <div key={todo.id}>
+          {todo.id}. {todo.title}
+        </div>
+      ))}
     </GuestLayout>
   )
 }
