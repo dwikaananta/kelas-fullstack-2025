@@ -1,12 +1,16 @@
+import { Sidebar } from "./sidebar";
+import { Topbar } from "./topbar";
+import { Footer } from "./footer";
+
 export const AuthLayout = ({ children }) => {
   return (
     <div className="bg-red-500 min-h-[100vh] flex">
       {/* SIDEBAR */}
-      <div className="bg-blue-500 w-[18%]">Sidebar</div>
+      <Sidebar />
 
       <div className="bg-green-500 w-full p-6 flex flex-col gap-6">
         {/* TOP BAR */}
-        <div className="bg-yellow-500 h-[7vh]">Topbar</div>
+        <Topbar />
 
         {/* CONTENT */}
         <div className="bg-purple-500 grow">
@@ -14,7 +18,7 @@ export const AuthLayout = ({ children }) => {
         </div>
 
         {/* FOOTER */}
-        <div className="bg-black h-[7vh] text-white">footer</div>
+        <Footer />
       </div>
     </div>
   )
