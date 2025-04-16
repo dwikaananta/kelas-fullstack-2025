@@ -1,8 +1,11 @@
 import { CgUser } from "react-icons/cg";
 import { MdReport } from "react-icons/md";
 import { RiDashboard2Fill, RiHomeOfficeFill } from "react-icons/ri";
+import { useLocation, Link } from "react-router";
 
 export const Sidebar = () => {
+    const location = useLocation();
+
     return (
       <div className="bg-gradient-to-b from-blue-950 to-blue-800 w-[18%]">
         {/* Logo */}
@@ -12,18 +15,27 @@ export const Sidebar = () => {
         </div>
         {/* Menus */}
         <div className="p-4 space-y-2">
-            <div className="py-2 px-3 bg-yellow-600 rounded flex gap-1 items-center hover:text-red-500">
+            <Link to="/dashboard" className={`
+                py-2 px-3 hover:opacity-75 rounded flex gap-1 items-center
+                ${location.pathname === '/dashboard' ? 'bg-yellow-600' : 'bg-yellow-500'}
+            `}>
                 <RiDashboard2Fill className="mb-0.5" />
                 <div>Dashboard</div>
-            </div>
-            <div className="py-2 px-3 bg-yellow-600 rounded flex gap-1 items-center">
+            </Link>
+            <Link to="/users" className={`
+                py-2 px-3 hover:opacity-75 rounded flex gap-1 items-center
+                ${location.pathname === '/users' ? 'bg-yellow-600' : 'bg-yellow-500'}
+            `}>
                 <CgUser className="mb-0.5" />
                 <div>Users</div>
-            </div>
-            <div className="py-2 px-3 bg-yellow-600 rounded flex gap-1 items-center">
+            </Link>
+            <Link to="/report" className={`
+                py-2 px-3 hover:opacity-75 rounded flex gap-1 items-center
+                ${location.pathname === '/report' ? 'bg-yellow-600' : 'bg-yellow-400'}
+            `}>
                 <MdReport className="mb-0.5" />
                 <div>Report</div>
-            </div>
+            </Link>
         </div>
       </div>
     )

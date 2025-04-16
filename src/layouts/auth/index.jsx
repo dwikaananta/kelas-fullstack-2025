@@ -4,16 +4,16 @@ import { Footer } from "./footer";
 
 export const AuthLayout = ({ children }) => {
   return (
-    <div className="bg-red-500 min-h-[100vh] flex">
+    <div className="bg-zinc-400 min-h-[100vh] flex">
       {/* SIDEBAR */}
       <Sidebar />
 
-      <div className="bg-green-500 w-full p-6 flex flex-col gap-6">
+      <div className="w-full p-6 flex flex-col gap-6">
         {/* TOP BAR */}
         <Topbar />
 
         {/* CONTENT */}
-        <div className="bg-purple-500 grow">
+        <div className="bg-white rounded p-6 grow">
           {children}
         </div>
 

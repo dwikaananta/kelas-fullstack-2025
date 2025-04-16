@@ -1,5 +1,5 @@
 export const Topbar = () => {
     return (
-        <div className="bg-yellow-500 h-[7vh]">Topbar</div>
+        <div className="bg-white h-[7vh] rounded">Topbar</div>
     )
 }
