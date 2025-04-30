@@ -5,9 +5,11 @@ import { AboutPage } from '../pages/about';
 import { LoginPage } from '../pages/login';
 import { TodosPage } from "../pages/todos";
 
-import { UsersPage } from "../pages/users";
 import { DashboardPage } from "../pages/dashboard";
 import { ReportPage } from "../pages/report";
+
+import { UsersPage } from "../pages/users";
+import { CreateUserPage } from "../pages/users/create";
 
 export const RootRoute = () => {
     return (
@@ -19,7 +21,10 @@ export const RootRoute = () => {
                 <Route path="/todos" element={<TodosPage />} />
 
                 <Route path="/dashboard" element={<DashboardPage />} />
+
                 <Route path="/users" element={<UsersPage />} />
+                <Route path="/users/create" element={<CreateUserPage />} />
+
                 <Route path="/report" element={<ReportPage />} />
             </Routes>
         </BrowserRouter>
