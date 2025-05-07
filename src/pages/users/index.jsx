@@ -37,6 +37,7 @@ export const UsersPage = () => {
             <th>No</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Profile</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -46,6 +47,14 @@ export const UsersPage = () => {
               <td>{index + 1}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
+              <td className="flex">
+                <img
+                  src={`http://localhost:8000/storage/users/profile/${user.profile}`}
+                  alt="Profile"
+                  className="w-32 rounded mx-auto cursor-pointer"
+                  onClick={() => window.open(`http://localhost:8000/storage/users/profile/${user.profile}`)}
+                />
+              </td>
               <td></td>
             </tr>
           ))}
