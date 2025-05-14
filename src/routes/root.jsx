@@ -10,6 +10,7 @@ import { ReportPage } from "../pages/report";
 
 import { UsersPage } from "../pages/users";
 import { CreateUserPage } from "../pages/users/create";
+import { EditUserPage } from "../pages/users/edit";
 
 export const RootRoute = () => {
     return (
@@ -24,6 +25,7 @@ export const RootRoute = () => {
 
                 <Route path="/users" element={<UsersPage />} />
                 <Route path="/users/create" element={<CreateUserPage />} />
+                <Route path="/users/:id" element={<EditUserPage />} />
 
                 <Route path="/report" element={<ReportPage />} />
             </Routes>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AuthLayout } from "../../layouts/auth";
 import axios from "axios";
 import { Link } from "react-router";
-import { FaPlus } from "react-icons/fa";
+import { FaEdit, FaPlus } from "react-icons/fa";
 
 export const UsersPage = () => {
   // state for storing data users
@@ -55,7 +55,11 @@ export const UsersPage = () => {
                   onClick={() => window.open(`http://localhost:8000/storage/users/profile/${user.profile}`)}
                 />
               </td>
-              <td></td>
+              <td>
+                <Link to={`/users/${user.id}`}>
+                  <FaEdit className="text-green-500" />
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

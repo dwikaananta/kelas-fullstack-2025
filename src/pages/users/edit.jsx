@@ -2,26 +2,53 @@ import { FaSave } from "react-icons/fa";
 import { AuthLayout } from "../../layouts/auth";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router";
+import Swal from "sweetalert2";
 
-export const CreateUserPage = () => {
-  const [form, setForm] = useState({});
+export const EditUserPage = () => {
+  const params = useParams();
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const url = `http://localhost:8000/api/users/${params.id}`;
+
+    const fetchUser = async () => {
+      const res = await axios.get(url);
+      setUser(res.data.user);
+    };
+
+    fetchUser();
+  }, [params.id]);
+
   const [validationError, setValidationError] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = "http://localhost:8000/api/users";
-
-    const formData = new FormData();
-
-    form.name && formData.append("name", form.name);
-    form.email && formData.append("email", form.email);
-    form.password && formData.append("password", form.password);
-    form.profile && formData.append("profile", form.profile);
+    const url = `http://localhost:8000/api/users/${params.id}`;
 
     try {
-      const res = await axios.post(url, formData);
+      const res = await axios.patch(url, user);
       console.log(res.data);
+
+      if (res.data) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "User updated !",
+        });
+      }
     } catch (error) {
       // console.error(error);
 
@@ -32,10 +59,6 @@ export const CreateUserPage = () => {
     }
   };
 
-  useEffect(() => {
-    // console.log(form);
-  }, [form]);
-
   return (
     <AuthLayout>
       <form onSubmit={handleSubmit}>
@@ -43,8 +66,9 @@ export const CreateUserPage = () => {
         <input
           name="name"
           type="text"
+          defaultValue={user.name || ""}
           onKeyUp={(e) => {
-            setForm((prev) => {
+            setUser((prev) => {
               return { ...prev, [e.target.name]: e.target.value };
             });
           }}
@@ -64,8 +88,9 @@ export const CreateUserPage = () => {
         <input
           name="email"
           type="email"
+          defaultValue={user.email || ""}
           onKeyUp={(e) => {
-            setForm((prev) => {
+            setUser((prev) => {
               return { ...prev, [e.target.name]: e.target.value };
             });
           }}
@@ -78,49 +103,6 @@ export const CreateUserPage = () => {
         {validationError.email && (
           <span className="text-red-500 block mb-3">
             {validationError.email}
-          </span>
-        )}
-
-        <label htmlFor="">Password</label>
-        <input
-          name="password"
-          type="password"
-          placeholder="******"
-          onKeyUp={(e) => {
-            setForm((prev) => {
-              return { ...prev, [e.target.name]: e.target.value };
-            });
-          }}
-          className="
-            py-2 px-4 w-full
-            mb-2 border border-blue-800
-            rounded ring-1 ring-blue-900
-          "
-        />
-        {validationError.password && (
-          <span className="text-red-500 block mb-3">
-            {validationError.password}
-          </span>
-        )}
-
-        <input
-          type="file"
-          name="profile"
-          onChange={(e) => {
-            const file = e.target.files[0];
-
-            setForm((prev) => {
-              return { ...prev, [e.target.name]: file };
-            });
-          }}
-          className="
-            mb-2 border py-2 px-4 border-blue-800
-            rounded ring-1 ring-blue-900
-          "
-        />
-        {validationError.profile && (
-          <span className="text-red-500 block mb-3">
-            {validationError.profile[0]}
           </span>
         )}
 
