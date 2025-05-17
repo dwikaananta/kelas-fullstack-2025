@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AuthLayout } from "../../layouts/auth";
 import axios from "axios";
 import { Link } from "react-router";
-import { FaEdit, FaPlus } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 
 export const UsersPage = () => {
   // state for storing data users
@@ -18,6 +18,10 @@ export const UsersPage = () => {
 
     fetchData();
   }, []);
+
+  const handleDelete = () => {
+    // 
+  }
 
   return (
     <AuthLayout>
@@ -52,13 +56,25 @@ export const UsersPage = () => {
                   src={`http://localhost:8000/storage/users/profile/${user.profile}`}
                   alt="Profile"
                   className="w-32 rounded mx-auto cursor-pointer"
-                  onClick={() => window.open(`http://localhost:8000/storage/users/profile/${user.profile}`)}
+                  onClick={() =>
+                    window.open(
+                      `http://localhost:8000/storage/users/profile/${user.profile}`
+                    )
+                  }
                 />
               </td>
               <td>
-                <Link to={`/users/${user.id}`}>
-                  <FaEdit className="text-green-500" />
-                </Link>
+                <div className="flex justify-center">
+                  <Link to={`/users/${user.id}`}>
+                    <FaEdit className="text-green-500" />
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(user.id)}
+                    className="text-red-500 cursor-pointer"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

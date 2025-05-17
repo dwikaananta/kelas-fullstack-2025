@@ -1,9 +1,14 @@
-import { FaSave } from "react-icons/fa";
-import { AuthLayout } from "../../layouts/auth";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { FaSave } from "react-icons/fa";
+import { useNavigate } from "react-router";
+import { AuthLayout } from "../../layouts/auth";
+import { swalMixin } from "../../lib/sweet-alert";
+import { Input } from "../../components/input";
 
 export const CreateUserPage = () => {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({});
   const [validationError, setValidationError] = useState([]);
 
@@ -22,6 +27,12 @@ export const CreateUserPage = () => {
     try {
       const res = await axios.post(url, formData);
       console.log(res.data);
+
+      if (res.data) {
+        swalMixin("success", "User stored !");
+
+        navigate("/users");
+      }
     } catch (error) {
       // console.error(error);
 
@@ -40,7 +51,7 @@ export const CreateUserPage = () => {
     <AuthLayout>
       <form onSubmit={handleSubmit}>
         <label htmlFor="">Name</label>
-        <input
+        <Input
           name="name"
           type="text"
           onKeyUp={(e) => {
@@ -48,11 +59,6 @@ export const CreateUserPage = () => {
               return { ...prev, [e.target.name]: e.target.value };
             });
           }}
-          className="
-            py-2 px-4 w-full
-            mb-2 border border-blue-800
-            rounded ring-1 ring-blue-900
-          "
         />
         {validationError.name && (
           <span className="text-red-500 block mb-3">
@@ -61,7 +67,7 @@ export const CreateUserPage = () => {
         )}
 
         <label htmlFor="">Email</label>
-        <input
+        <Input
           name="email"
           type="email"
           onKeyUp={(e) => {
@@ -69,11 +75,6 @@ export const CreateUserPage = () => {
               return { ...prev, [e.target.name]: e.target.value };
             });
           }}
-          className="
-            py-2 px-4 w-full
-            mb-2 border border-blue-800
-            rounded ring-1 ring-blue-900
-          "
         />
         {validationError.email && (
           <span className="text-red-500 block mb-3">
@@ -82,20 +83,14 @@ export const CreateUserPage = () => {
         )}
 
         <label htmlFor="">Password</label>
-        <input
+        <Input
           name="password"
           type="password"
-          placeholder="******"
           onKeyUp={(e) => {
             setForm((prev) => {
               return { ...prev, [e.target.name]: e.target.value };
             });
           }}
-          className="
-            py-2 px-4 w-full
-            mb-2 border border-blue-800
-            rounded ring-1 ring-blue-900
-          "
         />
         {validationError.password && (
           <span className="text-red-500 block mb-3">

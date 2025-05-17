@@ -1,12 +1,14 @@
-import { FaSave } from "react-icons/fa";
-import { AuthLayout } from "../../layouts/auth";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router";
-import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
+import { FaSave } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router";
+import { AuthLayout } from "../../layouts/auth";
+import { swalMixin } from "../../lib/sweet-alert";
+import { Input } from "../../components/input";
 
 export const EditUserPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({});
 
@@ -33,21 +35,9 @@ export const EditUserPage = () => {
       console.log(res.data);
 
       if (res.data) {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "success",
-          title: "User updated !",
-        });
+        swalMixin("success", "User updated !");
+
+        navigate("/users");
       }
     } catch (error) {
       // console.error(error);
@@ -63,20 +53,15 @@ export const EditUserPage = () => {
     <AuthLayout>
       <form onSubmit={handleSubmit}>
         <label htmlFor="">Name</label>
-        <input
+        <Input
           name="name"
           type="text"
-          defaultValue={user.name || ""}
+          value={user.name}
           onKeyUp={(e) => {
             setUser((prev) => {
               return { ...prev, [e.target.name]: e.target.value };
             });
           }}
-          className="
-            py-2 px-4 w-full
-            mb-2 border border-blue-800
-            rounded ring-1 ring-blue-900
-          "
         />
         {validationError.name && (
           <span className="text-red-500 block mb-3">
@@ -85,20 +70,15 @@ export const EditUserPage = () => {
         )}
 
         <label htmlFor="">Email</label>
-        <input
+        <Input
           name="email"
           type="email"
-          defaultValue={user.email || ""}
+          value={user.email}
           onKeyUp={(e) => {
             setUser((prev) => {
               return { ...prev, [e.target.name]: e.target.value };
             });
           }}
-          className="
-            py-2 px-4 w-full
-            mb-2 border border-blue-800
-            rounded ring-1 ring-blue-900
-          "
         />
         {validationError.email && (
           <span className="text-red-500 block mb-3">
