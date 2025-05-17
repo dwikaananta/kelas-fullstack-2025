@@ -17,3 +17,15 @@ export const swalMixin = (icon, title) => {
     title,
   });
 };
+
+export const swalDialog = (title, icon) => {
+  return Swal.fire({
+    title,
+    text: "You won't be able to revert this!",
+    icon,
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  });
+};

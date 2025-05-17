@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { AuthLayout } from "../../layouts/auth";
 import axios from "axios";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import { Link } from "react-router";
+import { AuthLayout } from "../../layouts/auth";
+import { swalDialog, swalMixin } from "../../lib/sweet-alert";
 
 export const UsersPage = () => {
   // state for storing data users
@@ -19,9 +20,22 @@ export const UsersPage = () => {
     fetchData();
   }, []);
 
-  const handleDelete = () => {
-    // 
-  }
+  const handleDelete = (id) => {
+    swalDialog("Are you sure for deleting this ?", "warning").then(
+      async (res) => {
+        if (res.isConfirmed) {
+          const url = `http://localhost:8000/api/users/${id}`;
+
+          const res = await axios.delete(url);
+
+          if (res.data) {
+            swalMixin("success", "Success delete !");
+            setUsers((prev) => prev.filter((user) => user.id !== id));
+          }
+        }
+      }
+    );
+  };
 
   return (
     <AuthLayout>
